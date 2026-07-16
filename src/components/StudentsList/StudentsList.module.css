@@ -1,0 +1,18 @@
+.studentList {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.studentItem {
+  padding: 6px;
+
+  display: flex;
+  flex-direction: column;
+  outline: 1px solid rgb(0, 0, 0);
+  box-shadow: 4px 4px rgb(193, 193, 193);
+
+  &:hover {
+    box-shadow: 4px 4px rgb(0, 0, 0);
+  }
+}
