@@ -7,6 +7,12 @@ export interface Student {
   avatar: string;
 }
 
+export interface Address {
+  street: string;
+  city: string;
+  country: string;
+}
+
 export interface Dog {
   id: number;
   name: string;
@@ -14,4 +20,5 @@ export interface Dog {
   breed: string;
   isFriendly: boolean;
   avatar: string;
+  address: Address;
 }
