@@ -1,19 +1,19 @@
-.studentList {
+.dogsList {
   display: flex;
   justify-content: center;
   gap: 12px;
   flex-wrap: wrap;
 }
 
-.studentItem {
+.dogItem {
   padding: 6px;
 
   display: flex;
   flex-direction: column;
   outline: 1px solid rgb(0, 0, 0);
-  box-shadow: 4px 4px rgb(149, 166, 187);
+  box-shadow: 4px 4px rgb(185, 170, 161);
 
   &:hover {
-    box-shadow: 4px 4px rgb(0, 110, 255);
+    box-shadow: 4px 4px rgb(255, 94, 0);
   }
 }

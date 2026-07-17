@@ -5,14 +5,25 @@ import { useState } from "react";
 
 import { initialDogs } from "../../data/dogs";
 import DogsList from "../DogsList/DogsList";
+import Button from "../Button/Button.tsx";
 
 export default function App() {
   const [dogs, setDogs] = useState(initialDogs);
+  const [isDogListVisible, setIsDogListVisible] = useState(false);
+
+  const handleToggleShowDodsClick = () => {
+    setIsDogListVisible(!isDogListVisible);
+  };
 
   return (
     <main>
       <section>
-        <DogsList dogs={dogs} />
+        <Button
+          type="button"
+          textContent={ isDogListVisible ? "Hide dogs list :(" : "Show dogs list :)"}
+          handleClick={handleToggleShowDodsClick}
+        />
+        {isDogListVisible && <DogsList dogs={dogs} />}
       </section>
 
       <hr />
