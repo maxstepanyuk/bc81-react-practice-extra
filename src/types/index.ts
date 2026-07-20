@@ -22,3 +22,10 @@ export interface Dog {
   avatar: string;
   address: Address;
 }
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  isOnline: boolean;
+}
