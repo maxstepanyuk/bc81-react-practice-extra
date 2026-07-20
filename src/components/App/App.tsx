@@ -11,6 +11,7 @@ import type { User } from "../../types/index.ts";
 import UsersList from "../UsersList/UsersList.tsx";
 import Loader from "../Loader/Loader.tsx";
 import ErrorMessage from "../ErrorMessage/ErrorMessage.tsx";
+import AddUserForm from "../AddUserForm/AddUserForm.tsx";
 
 export default function App() {
   const [dogs, setDogs] = useState(initialDogs);
@@ -19,6 +20,7 @@ export default function App() {
   const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [isFormShown, getIsFormShown] = useState(false);
 
   const handleToggleShowDodsClick = () => {
     setIsDogListVisible(!isDogListVisible);
@@ -40,12 +42,29 @@ export default function App() {
       setIsLoading(false);
     }
   };
+  const showForm = () => {
+    getIsFormShown(true);
+  };
+  const closeForm = () => {
+    getIsFormShown(false);
+  };
 
   return (
     <main>
       <section>
         {users.length > 0 ? (
-          <UsersList users={users} />
+          <>
+            <UsersList users={users} />
+            {isFormShown ? (
+              <AddUserForm onClose={closeForm} />
+            ) : (
+              <Button
+                type="button"
+                textContent="Add user"
+                handleClick={showForm}
+              />
+            )}
+          </>
         ) : (
           <Button
             type="button"
