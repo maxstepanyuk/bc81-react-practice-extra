@@ -29,6 +29,19 @@ export default function App() {
     const updDogs = dogs.filter((dog) => dog.id !== id);
     setDogs(updDogs);
   };
+  const toggleFriendly = (id: number) => {
+    const updDogs = dogs.map((dog) => {
+      if (dog.id === id) {
+        return {
+          ...dog,
+          isFriendly: !dog.isFriendly,
+        };
+      }
+      return dog;
+    });
+
+    setDogs(updDogs);
+  };
 
   const showUsers = async () => {
     try {
@@ -87,7 +100,11 @@ export default function App() {
           handleClick={handleToggleShowDodsClick}
         />
         {isDogListVisible && (
-          <DogsList dogs={dogs} handleDeleteDog={deleteDog} />
+          <DogsList
+            dogs={dogs}
+            handleDeleteDog={deleteDog}
+            handleToggleFriendly={toggleFriendly}
+          />
         )}
       </section>
 

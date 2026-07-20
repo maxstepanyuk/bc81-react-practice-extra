@@ -6,9 +6,14 @@ import AddressInfo from "../AddressInfo/AddressInfo";
 interface DogItemProps {
   dog: Dog;
   handleDeleteDog: (id: number) => void;
+  handleToggleFriendly: (id: number) => void;
 }
 
-export default function DogItem({ dog, handleDeleteDog }: DogItemProps) {
+export default function DogItem({
+  dog,
+  handleDeleteDog,
+  handleToggleFriendly,
+}: DogItemProps) {
   const [isAddressVisible, setIsAddressVisible] = useState(false);
 
   const showAddress = () => {
@@ -19,12 +24,20 @@ export default function DogItem({ dog, handleDeleteDog }: DogItemProps) {
     handleDeleteDog(dog.id);
   };
 
+  const ToggleFriedly = () => {
+    handleToggleFriendly(dog.id);
+  };
+
   return (
     <>
       <img src={dog.avatar} alt={dog.name} />
       <h2>{dog.name}</h2>
       <p>Age: {dog.age}</p>
       <p>Breed: {dog.breed}</p>
+      <p>
+        isFriendly:
+        {dog.isFriendly ? "Yes" : "No"}
+      </p>
 
       <Button type="button" textContent="Delete dog" handleClick={onDelte} />
 
@@ -37,6 +50,12 @@ export default function DogItem({ dog, handleDeleteDog }: DogItemProps) {
           handleClick={showAddress}
         />
       )}
+
+      <Button
+        type="button"
+        textContent="Toggle friendly"
+        handleClick={ToggleFriedly}
+      />
     </>
   );
 }
