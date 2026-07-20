@@ -9,11 +9,16 @@ import Button from "../Button/Button.tsx";
 import { getUsers } from "../../services/api.ts";
 import type { User } from "../../types/index.ts";
 import UsersList from "../UsersList/UsersList.tsx";
+import Loader from "../Loader/Loader.tsx";
+import ErrorMessage from "../ErrorMessage/ErrorMessage.tsx";
 
 export default function App() {
   const [dogs, setDogs] = useState(initialDogs);
   const [isDogListVisible, setIsDogListVisible] = useState(false);
+
   const [users, setUsers] = useState<User[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const handleToggleShowDodsClick = () => {
     setIsDogListVisible(!isDogListVisible);
@@ -24,9 +29,16 @@ export default function App() {
   };
 
   const showUsers = async () => {
-    const usersResponce = await getUsers();
-    setUsers(usersResponce);
-    console.log(usersResponce);
+    try {
+      setIsError(false);
+      setIsLoading(true);
+      const data = await getUsers();
+      setUsers(data);
+    } catch {
+      setIsError(true);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -41,6 +53,8 @@ export default function App() {
             handleClick={showUsers}
           />
         )}
+        {isLoading && <Loader />}
+        {isError && <ErrorMessage />}
       </section>
 
       <hr />
