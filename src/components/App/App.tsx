@@ -6,12 +6,13 @@ import { useState } from "react";
 import { initialDogs } from "../../data/dogs";
 import DogsList from "../DogsList/DogsList";
 import Button from "../Button/Button.tsx";
-import { getUsers } from "../../services/api.ts";
+import { getUsers } from "../../services/usersApi.ts";
 import type { User } from "../../types/index.ts";
 import UsersList from "../UsersList/UsersList.tsx";
 import Loader from "../Loader/Loader.tsx";
 import ErrorMessage from "../ErrorMessage/ErrorMessage.tsx";
 import AddUserForm from "../AddUserForm/AddUserForm.tsx";
+import Books from "../Books/Books.tsx";
 
 export default function App() {
   const [dogs, setDogs] = useState(initialDogs);
@@ -64,6 +65,12 @@ export default function App() {
 
   return (
     <main>
+      <section>
+        <Books />
+      </section>
+
+      <hr />
+
       <section>
         {users.length > 0 ? (
           <>

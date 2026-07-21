@@ -29,3 +29,11 @@ export interface User {
   email: string;
   isOnline: boolean;
 }
+
+export interface Book{
+  id: string;
+  title: string;
+  author: string;
+  description: string;
+  year: string | number;
+}
