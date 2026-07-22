@@ -26,7 +26,7 @@ export default function App() {
   const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [isFormShown, getIsFormShown] = useState(false);
+  const [isFormShown, setIsFormShown] = useState(false);
 
   const tabsConfig: Tab[] = [
     {
@@ -89,10 +89,10 @@ export default function App() {
     }
   };
   const showForm = () => {
-    getIsFormShown(true);
+    setIsFormShown(true);
   };
   const closeForm = () => {
-    getIsFormShown(false);
+    setIsFormShown(false);
   };
 
   return (
