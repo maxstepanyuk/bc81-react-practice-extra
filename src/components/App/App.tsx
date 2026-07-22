@@ -7,14 +7,19 @@ import { initialDogs } from "../../data/dogs";
 import DogsList from "../DogsList/DogsList";
 import Button from "../Button/Button.tsx";
 import { getUsers } from "../../services/usersApi.ts";
-import type { User } from "../../types/index.ts";
+import type { Tab, User } from "../../types/index.ts";
 import UsersList from "../UsersList/UsersList.tsx";
 import Loader from "../Loader/Loader.tsx";
 import ErrorMessage from "../ErrorMessage/ErrorMessage.tsx";
 import AddUserForm from "../AddUserForm/AddUserForm.tsx";
 import Books from "../Books/Books.tsx";
+import Tabs from "../Tabs/Tabs.tsx";
+
+type TabType = "books" | "users" | "dogs" | "students";
 
 export default function App() {
+  const [activeTab, setActiveTab] = useState<TabType>("books");
+
   const [dogs, setDogs] = useState(initialDogs);
   const [isDogListVisible, setIsDogListVisible] = useState(false);
 
@@ -22,6 +27,33 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isFormShown, getIsFormShown] = useState(false);
+
+  const tabsConfig: Tab[] = [
+    {
+      textContent: "Books",
+      clickHandler() {
+        setActiveTab("books");
+      },
+    },
+    {
+      textContent: "Users",
+      clickHandler() {
+        setActiveTab("users");
+      },
+    },
+    {
+      textContent: "Dogs",
+      clickHandler() {
+        setActiveTab("dogs");
+      },
+    },
+    {
+      textContent: "Students",
+      clickHandler() {
+        setActiveTab("students");
+      },
+    },
+  ];
 
   const handleToggleShowDodsClick = () => {
     setIsDogListVisible(!isDogListVisible);
@@ -64,62 +96,87 @@ export default function App() {
   };
 
   return (
-    <main>
-      <section>
-        <Books />
-      </section>
+    <>
+      <header>
+        <p>Nav:</p>
+        <nav>
+          <Tabs tabs={tabsConfig} />
+        </nav>
+      </header>
 
       <hr />
 
-      <section>
-        {users.length > 0 ? (
-          <>
-            <UsersList users={users} />
-            {isFormShown ? (
-              <AddUserForm onClose={closeForm} />
-            ) : (
+      <main>
+        <section>
+          <h2>Books {activeTab !== "books" && "(closed)"} </h2>
+          {activeTab === "books" && <Books />}
+        </section>
+
+        <hr />
+
+        <section>
+          <h2>Users {activeTab !== "users" && "(closed)"}</h2>
+
+          {activeTab === "users" && (
+            <>
+              {users.length > 0 ? (
+                <>
+                  <UsersList users={users} />
+                  {isFormShown ? (
+                    <AddUserForm onClose={closeForm} />
+                  ) : (
+                    <Button
+                      type="button"
+                      textContent="Add user"
+                      handleClick={showForm}
+                    />
+                  )}
+                </>
+              ) : (
+                <Button
+                  type="button"
+                  textContent="Get Users"
+                  handleClick={showUsers}
+                />
+              )}
+              {isLoading && <Loader />}
+              {isError && <ErrorMessage />}
+            </>
+          )}
+        </section>
+
+        <hr />
+
+        <section>
+          <h2>Dogs {activeTab !== "dogs" && "(closed)"} </h2>
+
+          {activeTab === "dogs" && (
+            <>
               <Button
                 type="button"
-                textContent="Add user"
-                handleClick={showForm}
+                textContent={
+                  isDogListVisible ? "Hide dogs list :(" : "Show dogs list :)"
+                }
+                handleClick={handleToggleShowDodsClick}
               />
-            )}
-          </>
-        ) : (
-          <Button
-            type="button"
-            textContent="Get Users"
-            handleClick={showUsers}
-          />
-        )}
-        {isLoading && <Loader />}
-        {isError && <ErrorMessage />}
-      </section>
+              {isDogListVisible && (
+                <DogsList
+                  dogs={dogs}
+                  handleDeleteDog={deleteDog}
+                  handleToggleFriendly={toggleFriendly}
+                />
+              )}
+            </>
+          )}
+        </section>
 
-      <hr />
+        <hr />
 
-      <section>
-        <Button
-          type="button"
-          textContent={
-            isDogListVisible ? "Hide dogs list :(" : "Show dogs list :)"
-          }
-          handleClick={handleToggleShowDodsClick}
-        />
-        {isDogListVisible && (
-          <DogsList
-            dogs={dogs}
-            handleDeleteDog={deleteDog}
-            handleToggleFriendly={toggleFriendly}
-          />
-        )}
-      </section>
-
-      <hr />
-
-      <section>
-        <StudentsList students={students} />
-      </section>
-    </main>
+        <section>
+          <h2>Students {activeTab !== "students" && "(closed)"} </h2>
+          {activeTab === "students" && <StudentsList students={students} />}
+        </section>
+      </main>
+    </>
   );
 }

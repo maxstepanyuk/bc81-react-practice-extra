@@ -37,3 +37,8 @@ export interface Book{
   description: string;
   year: string | number;
 }
+
+export interface Tab {
+  textContent: string;
+  clickHandler: () => void;
+}
